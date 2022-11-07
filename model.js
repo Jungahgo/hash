@@ -58,6 +58,7 @@
             labelContainer.childNodes[i].innerHTML = classPrediction;
             if (prediction[i].probability.toFixed(2) > 0.97) {
                 if (end_time == null){
+                    console.log("start_time setting");
                     start_time = new Date();
                 }
                 end_time = new Date();
