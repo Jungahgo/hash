@@ -46,14 +46,12 @@ const URL = "./my_model/";
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            if (prediction[i].probability.toFixed(2) = 1) {
+            if (prediction[i].probability.toFixed(2) == 1) {
                 console.log(prediction[i].className);
                 console.log(prediction[i].probability.toFixed(2))
                 result.innerHTML = "success";
             }
-            else {
-                result.innerHTML = "fail";
-            }
+            
             labelContainer.childNodes[i].innerHTML = classPrediction;
         }
 
