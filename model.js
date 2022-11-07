@@ -1,6 +1,7 @@
-const URL = "./my_model/";
+    let URL = "./model/one/";
     let model, webcam, ctx, labelContainer, result, maxPredictions;
     let start_time, end_time;
+    let cnt = 0;
 
     async function init() {
         const modelURL = URL + "model.json";
@@ -47,17 +48,27 @@ const URL = "./my_model/";
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+            cur_time = new Date();
             if (prediction[i].probability.toFixed(2) == 1) {
-                start_time = new Date();
-                console.log(start_time.getSeconds);
+                if (start_time == null){
+                    start_time = new Date();
+                }
+                console.log("start_time: ", start_time);
                 console.log(prediction[i].className);
                 console.log(prediction[i].probability.toFixed(2))
+                end_time = new Data();
+                console.log("end_time: ", end_time);
+                console.log("total_time: ",end_time-start_time);
                 result.innerHTML = "success"+start_time.getSeconds();
             }
 
             labelContainer.childNodes[i].innerHTML = classPrediction;
         }
 
+        //모든 동작을 완료한 경우
+        if (cnt == 2) {
+            result.innerHTML = "모든 동작을 완료했습니다."
+        }
         // finally draw the poses
         drawPose(pose);
     }
