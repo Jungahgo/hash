@@ -1,7 +1,8 @@
     let URL = "./model/";
     let model, webcam, ctx, labelContainer, result, maxPredictions;
-    let start_time = null;
-    let end_time = null;
+    let start_time;
+    let end_time;
+    let cur_status = "start";
     let cnt = 1;
 
     async function init() {
@@ -57,9 +58,10 @@
 
             labelContainer.childNodes[i].innerHTML = classPrediction;
             if (prediction[i].probability.toFixed(2) > 0.97) {
-                if (end_time == null){
-                    console.log("start_time setting");
+                
+                if (cur_status = "start") {
                     start_time = new Date();
+                    cur_status = "processing";
                 }
                 end_time = new Date();
                 console.log(end_time-start_time, start_time, end_time);
@@ -72,9 +74,7 @@
 
                 }
             }
-            else {
-                end_time = null;
-            }
+            
            
 
         }
