@@ -46,7 +46,7 @@ const URL = "./my_model/";
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            if (prediction[i].probability.toFixed(2) > 95) {
+            if (prediction[i].probability.toFixed(2) > 0.9) {
                 console.log(prediction[i].className);
                 result.innerHTML = "success";
             }
