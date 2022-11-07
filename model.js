@@ -1,7 +1,7 @@
     let URL = "./model/";
     let model, webcam, ctx, labelContainer, result, maxPredictions;
     let start_time = null;
-    let end_time;
+    let end_time = null;
     let cnt = 1;
 
     async function init() {
@@ -54,10 +54,10 @@
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            cur_time = new Date();
+
             labelContainer.childNodes[i].innerHTML = classPrediction;
             if (prediction[i].probability.toFixed(2) > 0.97) {
-                if (start_time == null){
+                if (end_time == null){
                     start_time = new Date();
                 }
                 end_time = new Date();
@@ -71,7 +71,10 @@
 
                 }
             }
-            start_time = null;
+            else {
+                end_time = null;
+            }
+           
 
         }
 
