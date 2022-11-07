@@ -48,7 +48,7 @@ const URL = "./my_model/";
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
             if (prediction[i].probability.toFixed(2) > 0.9) {
                 console.log(prediction[i].className);
-                result.innerHTML = "success";
+                result.innerHTML = predict[i].className;
             }
             labelContainer.childNodes[i].innerHTML = classPrediction;
         }
