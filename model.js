@@ -52,11 +52,12 @@
         const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
+        console.log(cur_status);
         if (cur_status = "start"){
             start_time = new Date();
             cur_status = "processing";
         }
-        console.log(cur_status);
+
 
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
