@@ -56,7 +56,7 @@
                 console.log("start_time: ", start_time);
                 console.log(prediction[i].className);
                 console.log(prediction[i].probability.toFixed(2))
-                end_time = new Data();
+                end_time = new Date();
                 console.log("end_time: ", end_time);
                 console.log("total_time: ",end_time-start_time);
                 result.innerHTML = "success"+start_time.getSeconds();
