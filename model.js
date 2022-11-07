@@ -51,18 +51,15 @@
         const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
-
+        if (cur_status = "start"){
+            start_time = new Date();
+            cur_status = "processing";
+        }
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
 
             labelContainer.childNodes[i].innerHTML = classPrediction;
-            
-            }
-            if (cur_status = "start"){
-                start_time = new Date();
-                cur_status = "processing";
-            }
             if (prediction[i].probability.toFixed(2) > 0.97) {
                 end_time = new Date();
                 console.log(end_time-start_time, start_time, end_time);
@@ -72,11 +69,14 @@
                     result.innerHTML = "success"+start_time.getSeconds();
                     cnt += 1;
                     reset();
-
+                    break;
                 }
             else{
                 cur_status = "start";
             }
+            }
+
+            
             
            
 
