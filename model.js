@@ -1,6 +1,7 @@
     let URL = "./model/";
     let model, webcam, ctx, labelContainer, result, maxPredictions;
-    let start_time, end_time;
+    let start_time = null;
+    let end_time;
     let cnt = 1;
 
     async function init() {
@@ -40,7 +41,7 @@
 
     async function reset() {
         //동작변경
-
+        
     }
 
     async function predict() {
@@ -59,8 +60,6 @@
                 if (start_time == null){
                     start_time = new Date();
                 }
-                console.log(prediction[i].className);
-                console.log(prediction[i].probability.toFixed(2))
                 end_time = new Date();
                 if (end_time - start_time > 2){
                     //2s 이상 실행시 
