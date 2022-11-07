@@ -52,7 +52,7 @@ const URL = "./my_model/";
                 console.log(start_time.getSeconds);
                 console.log(prediction[i].className);
                 console.log(prediction[i].probability.toFixed(2))
-                result.innerHTML = "success"+start_time.getSeconds;
+                result.innerHTML = "success"+start_time.getSeconds();
             }
 
             labelContainer.childNodes[i].innerHTML = classPrediction;
