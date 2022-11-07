@@ -4,9 +4,10 @@
     let cnt = 1;
 
     async function init() {
-        const modelURL = URL + cnt.toString() + "model.json";
-        const metadataURL = URL + cnt.toString() + "metadata.json";
-
+        const modelURL = URL + cnt + "model.json";
+        const metadataURL = URL + cnt + "metadata.json";
+        console.log("test","1"+1);
+        console.log(modelURL)
         // load the model and metadata
         // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
         // Note: the pose library adds a tmPose object to your window (window.tmPose)
