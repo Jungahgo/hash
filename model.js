@@ -72,11 +72,8 @@
                     reset();
                     break;
                 }
-            else{
-                cur_status = "start";
             }
-            }
-
+        cur_status = "start";
             
             
            
