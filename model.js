@@ -61,6 +61,7 @@
                     start_time = new Date();
                 }
                 end_time = new Date();
+                console.log(end_time-start_time);
                 if (end_time - start_time > 2){
                     //2s 이상 실행시 
                     console.log("동작하나 끝");
