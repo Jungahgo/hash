@@ -4,6 +4,7 @@
     let end_time;
     let cur_status = "start";
     let cnt = 1;
+    let check = 0;
 
     async function init() {
         const modelURL = URL + cnt + "/model.json";
@@ -56,12 +57,14 @@
             cur_status = "processing";
         }
         console.log(cur_status);
+
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
 
             labelContainer.childNodes[i].innerHTML = classPrediction;
             if (prediction[i].probability.toFixed(2) > 0.97) {
+                check = 1;
                 end_time = new Date();
                 console.log(end_time-start_time, start_time, end_time);
                 if (end_time - start_time > 2){
@@ -73,11 +76,12 @@
                     break;
                 }
             }
-        cur_status = "start";
-            
-            
-           
-
+        }
+        if (check = 1){
+            check = 0;
+        }
+        else {
+            cur_status = "start";
         }
 
         //모든 동작을 완료한 경우
