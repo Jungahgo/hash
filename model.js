@@ -1,7 +1,7 @@
-    let URL = "./model/one/";
+    let URL = "./model/";
     let model, webcam, ctx, labelContainer, result, maxPredictions;
     let start_time, end_time;
-    let cnt = 0;
+    let cnt = 1;
 
     async function init() {
         const modelURL = URL + "model.json";
@@ -10,7 +10,7 @@
         // load the model and metadata
         // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
         // Note: the pose library adds a tmPose object to your window (window.tmPose)
-        model = await tmPose.load(modelURL, metadataURL);
+        model = await tmPose.load(model+cnt.toString, metadataURL);
         maxPredictions = model.getTotalClasses();
 
         // Convenience function to setup a webcam
@@ -38,6 +38,11 @@
         window.requestAnimationFrame(loop);
     }
 
+    async function reset() {
+        //동작변경
+
+    }
+
     async function predict() {
         // Prediction #1: run input through posenet
         // estimatePose can take in an image, video or canvas html element
@@ -49,6 +54,7 @@
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
             cur_time = new Date();
+            labelContainer.childNodes[i].innerHTML = classPrediction;
             if (prediction[i].probability.toFixed(2) == 1) {
                 if (start_time == null){
                     start_time = new Date();
@@ -59,10 +65,16 @@
                 end_time = new Date();
                 console.log("end_time: ", end_time);
                 console.log("total_time: ",end_time-start_time);
-                result.innerHTML = "success"+start_time.getSeconds();
-            }
+                if (end_time - start_time > 2000){
+                    //2s 이상 실행시 
+                    result.innerHTML = "success"+start_time.getSeconds();
+                    cnt += 1;
+                    reset();
 
-            labelContainer.childNodes[i].innerHTML = classPrediction;
+                }
+            }
+            start_time = null;
+
         }
 
         //모든 동작을 완료한 경우
