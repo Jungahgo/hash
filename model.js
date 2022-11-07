@@ -1,5 +1,6 @@
 const URL = "./my_model/";
     let model, webcam, ctx, labelContainer, result, maxPredictions;
+    let start_time, end_time;
 
     async function init() {
         const modelURL = URL + "model.json";
@@ -47,11 +48,13 @@ const URL = "./my_model/";
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
             if (prediction[i].probability.toFixed(2) == 1) {
+                start_time = new Date().getSeconds;
+                console.log(start_time);
                 console.log(prediction[i].className);
                 console.log(prediction[i].probability.toFixed(2))
                 result.innerHTML = "success";
             }
-            
+
             labelContainer.childNodes[i].innerHTML = classPrediction;
         }
 
