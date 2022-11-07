@@ -60,6 +60,7 @@
             if (prediction[i].probability.toFixed(2) > 0.97) {
                 
                 if (cur_status = "start") {
+                    console.log("setting start_time");
                     start_time = new Date();
                     cur_status = "processing";
                 }
