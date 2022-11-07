@@ -1,5 +1,5 @@
 const URL = "./my_model/";
-    let model, webcam, ctx, labelContainer, maxPredictions;
+    let model, webcam, ctx, labelContainer, result, maxPredictions;
 
     async function init() {
         const modelURL = URL + "model.json";
@@ -24,6 +24,7 @@ const URL = "./my_model/";
         canvas.width = size; canvas.height = size;
         ctx = canvas.getContext("2d");
         labelContainer = document.getElementById("label-container");
+        result = document.getElementById("result");
         for (let i = 0; i < maxPredictions; i++) { // and class labels
             labelContainer.appendChild(document.createElement("div"));
         }
@@ -45,6 +46,10 @@ const URL = "./my_model/";
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+            if (prediction[i].probability.toFixed(2) > 95) {
+                console.log(prediction[i].className);
+                result.innerHTML = "success";
+            }
             labelContainer.childNodes[i].innerHTML = classPrediction;
         }
 
