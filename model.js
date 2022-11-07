@@ -51,6 +51,9 @@ const URL = "./my_model/";
                 console.log(prediction[i].probability.toFixed(2))
                 result.innerHTML = "success";
             }
+            else {
+                result.innerHTML = "fail";
+            }
             labelContainer.childNodes[i].innerHTML = classPrediction;
         }
 
