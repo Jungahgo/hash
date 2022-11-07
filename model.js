@@ -55,18 +55,16 @@
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
             cur_time = new Date();
             labelContainer.childNodes[i].innerHTML = classPrediction;
-            if (prediction[i].probability.toFixed(2) == 1) {
+            if (prediction[i].probability.toFixed(2) > 0.97) {
                 if (start_time == null){
                     start_time = new Date();
                 }
-                console.log("start_time: ", start_time);
                 console.log(prediction[i].className);
                 console.log(prediction[i].probability.toFixed(2))
                 end_time = new Date();
-                console.log("end_time: ", end_time);
-                console.log("total_time: ",end_time-start_time);
-                if (end_time - start_time > 2000){
+                if (end_time - start_time > 2){
                     //2s 이상 실행시 
+                    console.log("동작하나 끝");
                     result.innerHTML = "success"+start_time.getSeconds();
                     cnt += 1;
                     reset();
