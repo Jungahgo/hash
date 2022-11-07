@@ -55,6 +55,7 @@
             start_time = new Date();
             cur_status = "processing";
         }
+        console.log(cur_status);
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
