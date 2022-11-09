@@ -74,6 +74,7 @@
         if (prediction[0].probability.toFixed(2) > 0.97){
             console.log("i'm here!/ cur_status: ", cur_status);
             if (cur_status = "preparing"){
+                start_time = new Date();
                 cur_status = "start";
             }
             end_time = new Date();
