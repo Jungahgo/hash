@@ -67,7 +67,10 @@
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
         console.log(cur_status);
+        const classPrediction =
+                prediction[0].className + ": " + prediction[0].probability.toFixed(2);
 
+        labelContainer.childNodes[i].innerHTML = classPrediction;
         if (prediction[0].probability.toFixed(2) > 0.97){
             if (cur_status = "preparing"){
                 cur_status = "start";
