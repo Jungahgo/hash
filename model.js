@@ -7,7 +7,7 @@
     let total = 2; //총 동작 수
 
     async function initCam(){
-
+        console.log("initCam");
         init();
         // Convenience function to setup a webcam
         const size = 100;
