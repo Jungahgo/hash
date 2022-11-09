@@ -7,7 +7,7 @@
     let total = 2; //총 동작 수
 
     async function init() {
-        cnt = Math.floor(Math.random() * (total + 1));
+        cnt = Math.floor(Math.random() * (total))+1;
         console.log("난수: cnt",cnt)
         const modelURL = URL + cnt + "/model.json";
         const metadataURL = URL + cnt + "/metadata.json";
