@@ -2,7 +2,7 @@
     let model, webcam, ctx, labelContainer, result, maxPredictions;
     let start_time;
     let end_time;
-    let cur_status = "start";
+    let cur_status = "preparing";
     let cnt;
     let total = 2; //총 동작 수
 
@@ -19,7 +19,7 @@
         maxPredictions = model.getTotalClasses();
 
         // Convenience function to setup a webcam
-        const size = 200;
+        const size = 500;
         const flip = true; // whether to flip the webcam
         webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
         await webcam.setup(); // request access to the webcam
@@ -40,7 +40,17 @@
     async function loop(timestamp) {
         webcam.update(); // update the webcam frame
         await predict();
-        window.requestAnimationFrame(loop);
+        if (cur_status = "next") {
+            cur_status = "preparing";
+            init();
+        }
+        else if (cur_status = "start"){
+            start_time = new Date();
+            cur_status = "processing";
+        }
+        else {
+            window.requestAnimationFrame(loop);
+        }
     }
 
     async function reset() {
@@ -55,31 +65,39 @@
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
         console.log(cur_status);
-        if (cur_status = "start"){
-            start_time = new Date();
-            cur_status = "processing";
-        }
 
-
-        for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-
-            labelContainer.childNodes[i].innerHTML = classPrediction;
-            if (prediction[i].probability.toFixed(2) > 0.97) {
-                check = 1;
-                end_time = new Date();
-                console.log(end_time-start_time, start_time, end_time);
-                if (end_time - start_time > 2){
-                    //2s 이상 실행시 
-                    console.log("동작하나 끝");
-                    result.innerHTML = "success"+start_time.getSeconds();
-                    cnt += 1;
-                    reset();
-                    break;
-                }
+        if (prediction[0].probability.toFixed(2) > 0.97){
+            if (cur_status = "preparing"){
+                cur_status = "start";
+            }
+            end_time = new Date();
+            console.log("e-s: ", end_time-start_time);
+            if (end_time - start_time > 4){
+                console("동작 하나 끝");
+                result.innerHTML = "succes"+end_time;
+                cur_status = next;
             }
         }
+        // for (let i = 0; i < maxPredictions; i++) {
+        //     const classPrediction =
+        //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+
+        //     labelContainer.childNodes[i].innerHTML = classPrediction;
+        //     if (prediction[i].probability.toFixed(2) > 0.97) {
+        //         check = 1;
+        //         end_time = new Date();
+        //         console.log(end_time-start_time, start_time, end_time);
+        //         if (end_time - start_time > 2){
+        //             //2s 이상 실행시 
+        //             console.log("동작하나 끝");
+        //             result.innerHTML = "success"+start_time.getSeconds();
+        //             cnt += 1;
+        //             reset();
+        //             break;
+        //         }
+        //     }
+        // }
+
         
         if (check = 1){
             check = 0;
