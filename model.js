@@ -72,6 +72,7 @@
 
         labelContainer.childNodes[0].innerHTML = classPrediction;
         if (prediction[0].probability.toFixed(2) > 0.97){
+            console("i'm here!/ cur_status: ", cur_status);
             if (cur_status = "preparing"){
                 cur_status = "start";
             }
