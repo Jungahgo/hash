@@ -70,7 +70,7 @@
         const classPrediction =
                 prediction[0].className + ": " + prediction[0].probability.toFixed(2);
 
-        labelContainer.childNodes[i].innerHTML = classPrediction;
+        labelContainer.childNodes[0].innerHTML = classPrediction;
         if (prediction[0].probability.toFixed(2) > 0.97){
             if (cur_status = "preparing"){
                 cur_status = "start";
