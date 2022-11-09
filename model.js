@@ -6,18 +6,9 @@
     let cnt;
     let total = 2; //총 동작 수
 
-    async function init() {
-        cnt = Math.floor(Math.random() * (total))+1;
-        console.log("난수: cnt",cnt)
-        const modelURL = URL + cnt + "/model.json";
-        const metadataURL = URL + cnt + "/metadata.json";
+    async function initCam(){
 
-        // load the model and metadata
-        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-        // Note: the pose library adds a tmPose object to your window (window.tmPose)
-        model = await tmPose.load(modelURL, metadataURL);
-        maxPredictions = model.getTotalClasses();
-
+        init();
         // Convenience function to setup a webcam
         const size = 500;
         const flip = true; // whether to flip the webcam
@@ -35,6 +26,19 @@
         for (let i = 0; i < maxPredictions; i++) { // and class labels
             labelContainer.appendChild(document.createElement("div"));
         }
+    }
+
+    async function init() {
+        cnt = Math.floor(Math.random() * (total))+1;
+        console.log("난수: cnt",cnt)
+        const modelURL = URL + cnt + "/model.json";
+        const metadataURL = URL + cnt + "/metadata.json";
+
+        // load the model and metadata
+        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+        // Note: the pose library adds a tmPose object to your window (window.tmPose)
+        model = await tmPose.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
     }
 
     async function loop(timestamp) {
