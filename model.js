@@ -71,7 +71,7 @@
                 prediction[0].className + ": " + prediction[0].probability.toFixed(2);
 
         labelContainer.childNodes[0].innerHTML = classPrediction;
-        if (prediction[0].probability.toFixed(2) > 0.97){
+        if (prediction[0].probability.toFixed(2) > 0.9){
             console.log("i'm here!/ cur_status: ", cur_status);
             if (cur_status = "preparing"){
                 start_time = new Date();
