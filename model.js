@@ -3,10 +3,12 @@
     let start_time;
     let end_time;
     let cur_status = "start";
-    let cnt = 1;
-    let check = 0;
+    let cnt;
+    let total = 2; //총 동작 수
 
     async function init() {
+        cnt = Math.floor(Math.random() * (total + 1));
+        console.log("난수: cnt",cnt)
         const modelURL = URL + cnt + "/model.json";
         const metadataURL = URL + cnt + "/metadata.json";
 
@@ -78,6 +80,7 @@
                 }
             }
         }
+        
         if (check = 1){
             check = 0;
         }
