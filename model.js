@@ -72,11 +72,13 @@
 
         labelContainer.childNodes[0].innerHTML = classPrediction;
         if (prediction[0].probability.toFixed(2) > 0.97){
-            console("i'm here!/ cur_status: ", cur_status);
+            console.log("i'm here!/ cur_status: ", cur_status);
             if (cur_status = "preparing"){
                 cur_status = "start";
             }
             end_time = new Date();
+            console.log("end time: ", end_time);
+            console.log("start time: ", start_time);
             console.log("e-s: ", end_time-start_time);
             if (end_time - start_time > 4){
                 console("동작 하나 끝");
