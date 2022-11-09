@@ -42,6 +42,7 @@
     }
 
     async function loop(timestamp) {
+        console.log("----------------------");
         webcam.update(); // update the webcam frame
         await predict();
         if (cur_status = "next") {
@@ -107,18 +108,6 @@
         //     }
         // }
 
-        
-        if (check = 1){
-            check = 0;
-        }
-        else {
-            cur_status = "start";
-        }
-
-        //모든 동작을 완료한 경우
-        if (cnt == 2) {
-            result.innerHTML = "모든 동작을 완료했습니다."
-        }
         // finally draw the poses
         drawPose(pose);
     }
