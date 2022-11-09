@@ -52,9 +52,7 @@
             start_time = new Date();
             cur_status = "processing";
         }
-        else {
-            window.requestAnimationFrame(loop);
-        }
+        window.requestAnimationFrame(loop);
     }
 
     async function reset() {
