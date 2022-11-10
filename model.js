@@ -88,7 +88,7 @@
             console.log("start time: ", start_time);
             console.log("e-s: ", end_time-start_time);
             if (end_time - start_time > 4){
-                console("동작 하나 끝");
+                console.log("동작 하나 끝");
                 result.innerHTML = "succes"+end_time;
                 cur_status = next;
             }
