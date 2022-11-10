@@ -49,7 +49,8 @@
         await predict();
         if (cur_status == "next") {
             cur_status = "preparing";
-
+            //넘어갈 때 좀 기다려야할 듯
+            result.innerHTML = "다시";
             initState();
         }
         else if (cur_status == "start"){
@@ -87,7 +88,7 @@
             console.log("end time: ", end_time);
             console.log("start time: ", start_time);
             console.log("e-s: ", end_time-start_time);
-            if (end_time - start_time > 40){
+            if (end_time - start_time > 400){
                 console.log("동작 하나 끝");
                 result.innerHTML = "succes"+end_time;
                 cur_status = "next";
