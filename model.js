@@ -53,8 +53,8 @@
             initState();
         }
         else if (cur_status == "start"){
-            start_time = new Date();
-            console.log("start_time 측정 완");
+            // start_time = new Date();
+            // console.log("start_time 측정 완");
             cur_status = "processing";
         }
         window.requestAnimationFrame(loop);
@@ -78,7 +78,11 @@
         labelContainer.childNodes[0].innerHTML = classPrediction;
         if (prediction[0].probability.toFixed(2) > 0.9){
             console.log("i'm here!/ cur_status: ", cur_status);
-
+            if (cur_status = "preparing"){
+                start_time = new Date();
+                console.log("start_time 측정 완료");
+                cur_status = "start";
+            }
             end_time = new Date();
             console.log("end time: ", end_time);
             console.log("start time: ", start_time);
