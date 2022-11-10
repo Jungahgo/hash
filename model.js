@@ -61,10 +61,6 @@
         window.requestAnimationFrame(loop);
     }
 
-    async function reset() {
-        //동작변경
-        
-    }
 
     async function predict() {
         // Prediction #1: run input through posenet
@@ -93,28 +89,10 @@
                 result.innerHTML = "succes"+end_time;
                 cur_status = "next";
             }
+        else{
+            cur_status = "preparing";
         }
-        // for (let i = 0; i < maxPredictions; i++) {
-        //     const classPrediction =
-        //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
 
-        //     labelContainer.childNodes[i].innerHTML = classPrediction;
-        //     if (prediction[i].probability.toFixed(2) > 0.97) {
-        //         check = 1;
-        //         end_time = new Date();
-        //         console.log(end_time-start_time, start_time, end_time);
-        //         if (end_time - start_time > 2){
-        //             //2s 이상 실행시 
-        //             console.log("동작하나 끝");
-        //             result.innerHTML = "success"+start_time.getSeconds();
-        //             cnt += 1;
-        //             reset();
-        //             break;
-        //         }
-        //     }
-        // }
-
-        // finally draw the poses
         drawPose(pose);
     }
 
