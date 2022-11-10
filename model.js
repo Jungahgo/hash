@@ -4,7 +4,7 @@
     let end_time;
     let cur_status = "preparing";
     let cnt;
-    let total = 2; //총 동작 수
+    let total = 4; //총 동작 수
 
     async function initCam(){
         console.log("initCam");
@@ -61,10 +61,6 @@
         window.requestAnimationFrame(loop);
     }
 
-    async function reset() {
-        //동작변경
-        
-    }
 
     async function predict() {
         // Prediction #1: run input through posenet
@@ -88,33 +84,15 @@
             console.log("end time: ", end_time);
             console.log("start time: ", start_time);
             console.log("e-s: ", end_time-start_time);
-            if (end_time - start_time > 40000){
+            if (end_time - start_time > 4000){
                 console.log("동작 하나 끝");
                 result.innerHTML = "succes"+end_time;
                 cur_status = "next";
             }
+        } else {
+            cur_status = "preparing";
         }
-        // for (let i = 0; i < maxPredictions; i++) {
-        //     const classPrediction =
-        //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
 
-        //     labelContainer.childNodes[i].innerHTML = classPrediction;
-        //     if (prediction[i].probability.toFixed(2) > 0.97) {
-        //         check = 1;
-        //         end_time = new Date();
-        //         console.log(end_time-start_time, start_time, end_time);
-        //         if (end_time - start_time > 2){
-        //             //2s 이상 실행시 
-        //             console.log("동작하나 끝");
-        //             result.innerHTML = "success"+start_time.getSeconds();
-        //             cnt += 1;
-        //             reset();
-        //             break;
-        //         }
-        //     }
-        // }
-
-        // finally draw the poses
         drawPose(pose);
     }
 
