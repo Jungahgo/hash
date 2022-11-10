@@ -7,10 +7,10 @@
     let total = 2; //총 동작 수
 
     async function initCam(){
-        console.log("initCam");
+        //처음 1회만 실행
         init();
         // Convenience function to setup a webcam
-        const size = 100;
+        const size = 500;
         const flip = true; // whether to flip the webcam
         webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
         await webcam.setup(); // request access to the webcam
@@ -43,6 +43,7 @@
 
     async function loop(timestamp) {
         console.log("----------------------");
+        console.log(cur_status);
         webcam.update(); // update the webcam frame
         await predict();
         if (cur_status = "next") {
