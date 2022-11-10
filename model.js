@@ -48,12 +48,12 @@
         console.log(cur_status);
         webcam.update(); // update the webcam frame
         await predict();
-        if (cur_status = "next") {
+        if (cur_status == "next") {
             cur_status = "preparing";
             console.log("loop - if -> next");
             //initState();
         }
-        else if (cur_status = "start"){
+        else if (cur_status == "start"){
             start_time = new Date();
             cur_status = "processing";
         }
