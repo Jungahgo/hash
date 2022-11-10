@@ -50,7 +50,7 @@
         await predict();
         if (cur_status = "next") {
             cur_status = "preparing";
-            initState();
+            //initState();
         }
         else if (cur_status = "start"){
             start_time = new Date();
