@@ -4,7 +4,7 @@
     let end_time;
     let cur_status = "preparing";
     let cnt;
-    let total = 2; //총 동작 수
+    let total = 4; //총 동작 수
 
     async function initCam(){
         console.log("initCam");
