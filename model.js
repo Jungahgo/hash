@@ -50,6 +50,7 @@
         await predict();
         if (cur_status = "next") {
             cur_status = "preparing";
+            console.log("loop - if -> next");
             //initState();
         }
         else if (cur_status = "start"){
