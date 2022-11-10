@@ -81,11 +81,8 @@
                 cur_status = "start";
             }
             end_time = new Date();
-            console.log("end time: ", end_time);
-            console.log("start time: ", start_time);
-            console.log("e-s: ", end_time-start_time);
+
             if (end_time - start_time > 4000){
-                console.log("동작 하나 끝");
                 result.innerHTML = "succes"+end_time;
                 cur_status = "next";
             }
