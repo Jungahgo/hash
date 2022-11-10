@@ -51,7 +51,7 @@
         if (cur_status == "next") {
             cur_status = "preparing";
             console.log("loop - if -> next");
-            //initState();
+            initState();
         }
         else if (cur_status == "start"){
             start_time = new Date();
