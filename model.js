@@ -90,7 +90,7 @@
             if (end_time - start_time > 4){
                 console.log("동작 하나 끝");
                 result.innerHTML = "succes"+end_time;
-                cur_status = next;
+                cur_status = "next";
             }
         }
         // for (let i = 0; i < maxPredictions; i++) {
