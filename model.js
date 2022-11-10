@@ -89,6 +89,7 @@
                 result.innerHTML = "succes"+end_time;
                 cur_status = "next";
             }
+        }
         else{
             cur_status = "preparing";
         }
