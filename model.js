@@ -7,8 +7,9 @@
     let total = 2; //총 동작 수
 
     async function initCam(){
+        console.log("initCam");
         //처음 1회만 실행
-        init();
+        initState();
         // Convenience function to setup a webcam
         const size = 500;
         const flip = true; // whether to flip the webcam
@@ -28,7 +29,8 @@
         }
     }
 
-    async function init() {
+    async function initState() {
+        console.log("initState");
         cnt = Math.floor(Math.random() * (total))+1;
         console.log("난수: cnt",cnt)
         const modelURL = URL + cnt + "/model.json";
@@ -48,7 +50,7 @@
         await predict();
         if (cur_status = "next") {
             cur_status = "preparing";
-            init();
+            initState();
         }
         else if (cur_status = "start"){
             start_time = new Date();
