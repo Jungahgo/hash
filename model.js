@@ -63,7 +63,7 @@
     }
 
     async function initCall(){
-        var text = '아! "' + title + '" 작업 기한이 만료됐습니다.';
+        var text = "척추 요정~";
         var notification = new Notification('할 일 목록', { body: text});
         setTimeout(notification.close.bind(notification), 4000);
         
@@ -99,6 +99,7 @@
         console.log("난수: cnt",cnt)
         const modelURL = URL + cnt + "/model.json";
         const metadataURL = URL + cnt + "/metadata.json";
+        document.getElementById("poseImg").src = URL + cnt + "/사진" + cnt + ".png";
 
         // load the model and metadata
         // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
