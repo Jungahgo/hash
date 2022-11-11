@@ -3,9 +3,9 @@ body {
 }
 
 
-*{
+* {
     font-family: 'NeoDunggeunmo';
     text-align: center;
-    width: 80%;
     border-radius: 10px;
+    margin: 10dp;
 }
