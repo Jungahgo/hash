@@ -1,4 +1,4 @@
-    let URL = "./model/";
+let URL = "./model/";
     let model, webcam, ctx, labelContainer, result, maxPredictions;
     let start_time;
     let end_time;
@@ -138,6 +138,24 @@
                 prediction[0].className + ": " + prediction[0].probability.toFixed(2);
 
         labelContainer.childNodes[0].innerHTML = classPrediction;
+        //if(prediction[2].className = "error"){
+        //  if(prediction[2].probability.toFixed(2) > 0.95){
+        //    var error_audio = new Audio('./audio/error.mp3');
+        //    error_audio.play();
+        //  }
+        //}
+
+        for (let k = 0; k < maxPredictions; k++) {
+              if(prediction[k].className == "error"){
+                if(prediction[k].probability.toFixed(2) > 0.95){
+                  var error_audio = new Audio('./audio/error.mp3');
+                  error_audio.play();
+                }
+              }
+              else {
+                continue;
+              }
+      }
         if (prediction[0].probability.toFixed(2) > 0.9){
             console.log("i'm here!/ cur_status: ", cur_status);
             if (cur_status == "preparing"){
@@ -148,7 +166,7 @@
             end_time = new Date();
 
             if (end_time - start_time > 4000){
-                result.innerHTML = "succes"+end_time;
+                result.innerHTML = "success"+end_time;
                 cur_status = "next";
             }
         } else {
