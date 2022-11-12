@@ -138,12 +138,6 @@ let URL = "./model/";
                 prediction[0].className + ": " + prediction[0].probability.toFixed(2);
 
         labelContainer.childNodes[0].innerHTML = classPrediction;
-        //if(prediction[2].className = "error"){
-        //  if(prediction[2].probability.toFixed(2) > 0.95){
-        //    var error_audio = new Audio('./audio/error.mp3');
-        //    error_audio.play();
-        //  }
-        //}
 
         for (let k = 0; k < maxPredictions; k++) {
               if(prediction[k].className == "error"){
