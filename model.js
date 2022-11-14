@@ -110,61 +110,43 @@ let URL = "./model/";
     }
 
     async function loop(timestamp) {
-        console.log("--------",timestamp,et);
+        console.log("----------loop-----------");
         webcam.update(); // update the webcam frame
-        if (et == undefined)
+        if (et == 0)
         {
-          et = timestamp;
+          et = new Date();
           console.log("undefined");
         }
-        else
-        {
-          et = et;
-          console.log("defined");
-        }
 
-        await predict(timestamp, et);
-        
+        console.log("after defined", et);
+        await predict();
+        let temp = new Date();
         if (cur_status == "next_waiting"){
-          console.log("===========================");
+          console.log("===========next_wating===========");
           cur_status = "next";
-          et = timestamp;
+          et = temp;
           result.innerHTML = "성공";
         }
-        else if ( et = timestamp + 2000 && cur_status == "next") {
+        else if ( et = temp + 2000 && cur_status == "next") {
             cur_status = "preparing";
-            et = timestamp;
+            et = temp;
             initState();
         }
         window.requestAnimationFrame(loop);
     }
 
 
-    async function predict(timestamp, et) {
+    async function predict() {
         // Prediction #1: run input through posenet
         // estimatePose can take in an image, video or canvas html element
         const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
         console.log(cur_status);
-        console.log("predict -> timestamp/t",timestamp, et);
+        console.log("predict -> timestamp/t", et);
         const classPrediction = prediction[1].className + ": " + prediction[1].probability.toFixed(2);
 
         labelContainer.childNodes[1].innerHTML = classPrediction;
-
-        for (let k = 0; k < maxPredictions; k++) {
-              if(prediction[k].className == "error"){
-                if(prediction[k].probability.toFixed(2) > 0.95 && timestamp - et > 100000){
-                  console.log("++++++++++++++++", timestamp, et);
-                  var error_audio = new Audio('./audio/error.mp3');
-                  et = timestamp;
-                  error_audio.play();
-                }
-              }
-              else {
-                continue;
-              }
-        }
 
         if (prediction[1].probability.toFixed(2) > 0.9){
             console.log("i'm here!/ cur_status: ", cur_status);
@@ -181,15 +163,17 @@ let URL = "./model/";
             }
         } else {
           console.log("+++++++error case+++++++");
-          console.log(timestamp, et);
+          console.log(et);
+            let temp2 = new Date();
+            console.log("====>",temp2-et);
             cur_status = "preparing";
-            if(timestamp - et > 100000){
+            if(temp2 - et > 50){
+              console.log("(((((((sound))))))))");
               var error_audio = new Audio('./audio/error.mp3');
-              et = timestamp;
+              et = temp2;
               error_audio.play();
             }
         }
-
         drawPose(pose);
     }
 
