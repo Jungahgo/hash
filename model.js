@@ -120,6 +120,7 @@ let URL = "./model/";
             cur_status = "preparing";
             //넘어갈 때 좀 기다려야할 듯
             result.innerHTML = "다시";
+            t = timestamp;
             initState();
         }
         window.requestAnimationFrame(loop);
