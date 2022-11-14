@@ -4,6 +4,7 @@ let URL = "./model/";
     let end_time;
     let cur_status = "preparing";
     let cnt;
+    let t; //동작 도전 시간
     let total = 4; //총 동작 수
 
 
@@ -96,7 +97,6 @@ let URL = "./model/";
     async function initState() {
         console.log("initState");
         cnt = Math.floor(Math.random() * (total))+1;
-        console.log("난수: cnt",cnt)
         const modelURL = URL + cnt + "/model.json";
         const metadataURL = URL + cnt + "/metadata.json";
         document.getElementById("poseImg").src = URL + cnt + "/사진" + cnt + ".png";
@@ -109,39 +109,38 @@ let URL = "./model/";
     }
 
     async function loop(timestamp) {
-        console.log("----------------------", cur_status);
+        console.log("--------",timestamp);
         webcam.update(); // update the webcam frame
-        await predict();
+        if (t == null)
+        {
+          t = timestamp;
+        }
+        await predict(timestamp);
         if (cur_status == "next") {
             cur_status = "preparing";
             //넘어갈 때 좀 기다려야할 듯
             result.innerHTML = "다시";
+            t = timestamp;
             initState();
-        }
-        else if (cur_status == "start"){
-            // start_time = new Date();
-            // console.log("start_time 측정 완");
-            cur_status = "processing";
         }
         window.requestAnimationFrame(loop);
     }
 
 
-    async function predict() {
+    async function predict(timestamp) {
         // Prediction #1: run input through posenet
         // estimatePose can take in an image, video or canvas html element
         const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
         console.log(cur_status);
-        const classPrediction =
-                prediction[0].className + ": " + prediction[0].probability.toFixed(2);
+        const classPrediction = prediction[0].className + ": " + prediction[0].probability.toFixed(2);
 
         labelContainer.childNodes[0].innerHTML = classPrediction;
 
         for (let k = 0; k < maxPredictions; k++) {
               if(prediction[k].className == "error"){
-                if(prediction[k].probability.toFixed(2) > 0.95){
+                if(prediction[k].probability.toFixed(2) > 0.95 && t - timestamp > 1000){
                   var error_audio = new Audio('./audio/error.mp3');
                   error_audio.play();
                 }
