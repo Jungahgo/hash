@@ -4,7 +4,7 @@ let URL = "./model/";
     let end_time;
     let cur_status = "preparing";
     let cnt;
-    let t; //동작 도전 시간
+    let et; //동작 도전 시간
     let total = 4; //총 동작 수
 
 
@@ -65,7 +65,7 @@ let URL = "./model/";
 
     async function initCall(){
         var text = "척추 요정~";
-        var notification = new Notification('할 일 목록', { body: text});
+        var notification = new Notification('스트레칭할 시간입니다.', { body: text});
         setTimeout(notification.close.bind(notification), 4000);
         
     }
@@ -110,55 +110,63 @@ let URL = "./model/";
     }
 
     async function loop(timestamp) {
-        console.log("--------",timestamp,t);
+        console.log("--------",timestamp,et);
         webcam.update(); // update the webcam frame
-        if (t == false)
+        if (et == undefined)
         {
-          t = timestamp;
-          console.log("yyyyyyyyyyyyyyyyyyyyyyyyyy");
+          et = timestamp;
+          console.log("undefined");
         }
-        await predict(timestamp);
+        else
+        {
+          et = et;
+          console.log("defined");
+        }
+
+        await predict(timestamp, et);
+        
         if (cur_status == "next_waiting"){
           console.log("===========================");
           cur_status = "next";
-          t = timestamp;
+          et = timestamp;
           result.innerHTML = "성공";
         }
-        else if ( t = timestamp + 2000 && cur_status == "next") {
+        else if ( et = timestamp + 2000 && cur_status == "next") {
             cur_status = "preparing";
-            //넘어갈 때 좀 기다려야할 듯
-            t = timestamp;
+            et = timestamp;
             initState();
         }
         window.requestAnimationFrame(loop);
     }
 
 
-    async function predict(timestamp) {
+    async function predict(timestamp, et) {
         // Prediction #1: run input through posenet
         // estimatePose can take in an image, video or canvas html element
         const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
         console.log(cur_status);
-        const classPrediction = prediction[0].className + ": " + prediction[0].probability.toFixed(2);
+        console.log("predict -> timestamp/t",timestamp, et);
+        const classPrediction = prediction[1].className + ": " + prediction[1].probability.toFixed(2);
 
-        labelContainer.childNodes[0].innerHTML = classPrediction;
+        labelContainer.childNodes[1].innerHTML = classPrediction;
 
         for (let k = 0; k < maxPredictions; k++) {
               if(prediction[k].className == "error"){
-                if(prediction[k].probability.toFixed(2) > 0.95 && timestamp - t > 1000){
-                  console.log("++++++++++++++++", timestamp, t);
+                if(prediction[k].probability.toFixed(2) > 0.95 && timestamp - et > 100000){
+                  console.log("++++++++++++++++", timestamp, et);
                   var error_audio = new Audio('./audio/error.mp3');
-                  t = timestamp;
+                  et = timestamp;
                   error_audio.play();
                 }
               }
               else {
                 continue;
               }
-      }
-        if (prediction[0].probability.toFixed(2) > 0.9){
+        }
+
+        if (prediction[1].probability.toFixed(2) > 0.9){
             console.log("i'm here!/ cur_status: ", cur_status);
             if (cur_status == "preparing"){
                 start_time = new Date();
@@ -167,12 +175,19 @@ let URL = "./model/";
             }
             end_time = new Date();
 
-            if (end_time - start_time > 4000){
+            if (end_time - start_time > 3600){
                 result.innerHTML = "success"+end_time;
                 cur_status = "next_waiting";
             }
         } else {
+          console.log("+++++++error case+++++++");
+          console.log(timestamp, et);
             cur_status = "preparing";
+            if(timestamp - et > 100000){
+              var error_audio = new Audio('./audio/error.mp3');
+              et = timestamp;
+              error_audio.play();
+            }
         }
 
         drawPose(pose);
