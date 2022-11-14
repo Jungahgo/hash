@@ -140,7 +140,7 @@ let URL = "./model/";
 
         for (let k = 0; k < maxPredictions; k++) {
               if(prediction[k].className == "error"){
-                if(prediction[k].probability.toFixed(2) > 0.95 && t - timestamp > 1000){
+                if(prediction[k].probability.toFixed(2) > 0.95 && timestamp - t > 1000){
                   var error_audio = new Audio('./audio/error.mp3');
                   error_audio.play();
                 }
