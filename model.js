@@ -110,9 +110,9 @@ let URL = "./model/";
     }
 
     async function loop(timestamp) {
-        console.log("--------",timestamp);
+        console.log("--------",timestamp,t);
         webcam.update(); // update the webcam frame
-        if (t == null)
+        if (t == false)
         {
           t = timestamp;
         }
@@ -147,7 +147,7 @@ let URL = "./model/";
         for (let k = 0; k < maxPredictions; k++) {
               if(prediction[k].className == "error"){
                 if(prediction[k].probability.toFixed(2) > 0.95 && timestamp - t > 1000){
-                  console.log("++++++++++++++++");
+                  console.log("++++++++++++++++", timestamp, t);
                   var error_audio = new Audio('./audio/error.mp3');
                   t = timestamp;
                   error_audio.play();
