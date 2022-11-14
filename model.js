@@ -115,6 +115,7 @@ let URL = "./model/";
         if (t == false)
         {
           t = timestamp;
+          console.log("yyyyyyyyyyyyyyyyyyyyyyyyyy");
         }
         await predict(timestamp);
         if (cur_status == "next_waiting"){
