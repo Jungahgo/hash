@@ -112,11 +112,6 @@ let URL = "./model/";
     async function loop(timestamp) {
         console.log("----------loop-----------");
         webcam.update(); // update the webcam frame
-        if (et == 0)
-        {
-          et = new Date();
-          console.log("undefined");
-        }
 
         console.log("after defined", et);
         await predict();
@@ -124,13 +119,13 @@ let URL = "./model/";
         if (cur_status == "next_waiting"){
           console.log("===========next_wating===========");
           cur_status = "next";
-          et = temp;
           result.innerHTML = "성공";
         }
         else if ( et = temp + 2000 && cur_status == "next") {
             cur_status = "preparing";
-            et = temp;
+            result.innerHTML = "다시";
             initState();
+            
         }
         window.requestAnimationFrame(loop);
     }
@@ -147,7 +142,11 @@ let URL = "./model/";
         const classPrediction = prediction[1].className + ": " + prediction[1].probability.toFixed(2);
 
         labelContainer.childNodes[1].innerHTML = classPrediction;
-
+        if (et == 0)
+        {
+          et = new Date();
+          console.log("undefined");
+        }
         if (prediction[1].probability.toFixed(2) > 0.9){
             console.log("i'm here!/ cur_status: ", cur_status);
             if (cur_status == "preparing"){
@@ -160,6 +159,7 @@ let URL = "./model/";
             if (end_time - start_time > 3600){
                 result.innerHTML = "success"+end_time;
                 cur_status = "next_waiting";
+                et = new Date();
             }
         } else {
           console.log("+++++++error case+++++++");
@@ -167,7 +167,7 @@ let URL = "./model/";
             let temp2 = new Date();
             console.log("====>",temp2-et);
             cur_status = "preparing";
-            if(temp2 - et > 50){
+            if(temp2 - et > 1200){
               console.log("(((((((sound))))))))");
               var error_audio = new Audio('./audio/error.mp3');
               et = temp2;
