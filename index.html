@@ -5,8 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>스트레칭 요정</title>
-    <link rel="stylesheet" href="./css/default.css">
+    <link rel="stylesheet" href="./default.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@1.530/neodgm/style.css">
+
+    <script>
+        if (!!window.EventSource) {
+            var source = new EventSource('/events');
+            source.addEventListener('open', function(e) {
+             console.log("Events Connected");
+            }, false);
+    
+            source.addEventListener('update', function(e) {
+                var ad_value = e.data;
+                document.getElementById("ad_val").innerHTML = ad_value;
+               }, false);
+           }
+    </script>
+
 </head>
 <body>
     <div class="container">
@@ -15,13 +30,12 @@
             <img id = "poseImg" class="mx-auto my-auto">
             <canvas id="canvas" class="mx-auto my-auto" ></canvas>
         </div>
-        <p></p>
         <div id = "poseDescript" class="mx-auto my-auto">
             4초동안 자세를 유지해주세요!
         </div>
-        <p></p>
+        <div>sensor= <span id="ad_val"></span></div><p></p>
         <button type="button" class="mx-auto my-auto" onclick="js:init()">Start</button>
-        <p></p>
+
         <div id="label-container"></div>
         <div id="result" class="mx-auto my-auto" >fail</div>
 
