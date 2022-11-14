@@ -57,8 +57,8 @@ let URL = "./model/";
         // 초기 함수    
         // 알림 허용 받기
         console.log("init");
-        askNotificationPermission();
-
+        //askNotificationPermission();
+        //initCall();
         initCam();
 
     }
@@ -73,7 +73,7 @@ let URL = "./model/";
     async function initCam(){
         console.log("initCam");
         //처음 1회만 실행
-        initCall();
+
         initState();
         // Convenience function to setup a webcam
         const size = 500;
@@ -97,6 +97,7 @@ let URL = "./model/";
     async function initState() {
         console.log("initState");
         cnt = Math.floor(Math.random() * (total))+1;
+        console.log("난수: ",cnt);
         const modelURL = URL + cnt + "/model.json";
         const metadataURL = URL + cnt + "/metadata.json";
         document.getElementById("poseImg").src = URL + cnt + "/사진" + cnt + ".png";
@@ -116,10 +117,15 @@ let URL = "./model/";
           t = timestamp;
         }
         await predict(timestamp);
-        if (cur_status == "next") {
+        if (cur_status == "next_waiting"){
+          console.log("===========================");
+          cur_status = "next";
+          t = timestamp;
+          result.innerHTML = "성공";
+        }
+        else if ( t = timestamp + 2000 && cur_status == "next") {
             cur_status = "preparing";
             //넘어갈 때 좀 기다려야할 듯
-            result.innerHTML = "다시";
             t = timestamp;
             initState();
         }
@@ -141,6 +147,7 @@ let URL = "./model/";
         for (let k = 0; k < maxPredictions; k++) {
               if(prediction[k].className == "error"){
                 if(prediction[k].probability.toFixed(2) > 0.95 && timestamp - t > 1000){
+                  console.log("++++++++++++++++");
                   var error_audio = new Audio('./audio/error.mp3');
                   error_audio.play();
                 }
@@ -160,7 +167,7 @@ let URL = "./model/";
 
             if (end_time - start_time > 4000){
                 result.innerHTML = "success"+end_time;
-                cur_status = "next";
+                cur_status = "next_waiting";
             }
         } else {
             cur_status = "preparing";
