@@ -96,7 +96,7 @@ async function initCam(){
 
 async function initState() {
     console.log("initState");
-    
+    done_cnt += 1;
     cnt = Math.floor(Math.random() * (total))+1;
     console.log("난수: ",cnt);
     const modelURL = URL + cnt + "/model.json";
@@ -128,7 +128,8 @@ async function loop(timestamp) {
     if (cur_status == "next_waiting"){
       console.log("===========next_wating===========");
       cur_status = "next";
-      done_cnt += 1;
+
+      console.log("done_cnt",done_cnt);
       if (done_cnt == 2) 
       {
         result.innerHTML = "Finish";
