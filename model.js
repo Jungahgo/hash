@@ -166,7 +166,11 @@ let URL = "./model/";
                 cur_status = "start";
             }
             end_time = new Date();
-
+            if ((end_time - start_time)%60  == 0)
+            {
+              console.log("jungah",(3600-(end_time-start_time))/60);
+              result.innerHTML = (3600 - (end_time - start_time))/60;
+            }
             if (end_time - start_time > 3600){
                 result.innerHTML = "success"+end_time;
                 cur_status = "next_waiting";
@@ -182,7 +186,8 @@ let URL = "./model/";
             error_audio.play();
             console.log("audio 출력");
           }
-            }
+          start_time = new Date();
+        }
         drawPose(pose);
     }
     function drawPose(pose) {
