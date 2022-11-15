@@ -96,6 +96,7 @@ let URL = "./model/";
 
     async function initState() {
         console.log("initState");
+        
         cnt = Math.floor(Math.random() * (total))+1;
         console.log("난수: ",cnt);
         const modelURL = URL + cnt + "/model.json";
@@ -109,9 +110,16 @@ let URL = "./model/";
         maxPredictions = model.getTotalClasses();
     }
 
+    function sleep(ms) {
+      const wakeUpTime = Date.now() + ms;
+      while (Date.now() < wakeUpTime) {}
+    }
+
     async function loop(timestamp) {
         console.log("----------loop-----------");
         webcam.update(); // update the webcam frame
+        //var start_audio = new Audio('./audio/start.mp3');
+        //start_audio.play();
 
         console.log("after defined", et);
         await predict();
@@ -120,13 +128,12 @@ let URL = "./model/";
           console.log("===========next_wating===========");
           cur_status = "next";
           result.innerHTML = "성공";
+          sleep(2000);
+          cur_status = "preparing";
+          result.innerHTML = "다시";
+          initState();
         }
-        else if ( et = temp + 2000 && cur_status == "next") {
-            cur_status = "preparing";
-            result.innerHTML = "다시";
-            initState();
-            
-        }
+        
         window.requestAnimationFrame(loop);
     }
 
@@ -164,7 +171,8 @@ let URL = "./model/";
         } else {
           error++;
           console.log("++++error case++++", error, "개");
-          if(error % 40 == 0){
+          
+          if(error % 60 == 0 || error == 1){
             var error_audio = new Audio('./audio/error.mp3');
             error_audio.play();
             console.log("audio 출력");
