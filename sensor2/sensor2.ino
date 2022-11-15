@@ -37,18 +37,6 @@ void setup(){
 
   InitWebServer();
 }
- 
-//static const unsigned long EVENT_INTERVAL_MS = 30;
-//void ProcessUpdate()
-//{
-//  static uint32_t prev_ms = millis();
-//  if (millis() > prev_ms + EVENT_INTERVAL_MS)
-//  {
-//    events.send(String(digitalRead(SensorPin)).c_str(),"update", millis());
-//    prev_ms = millis();
-//  }
-//
-//}
 
 void loop()
 { 
