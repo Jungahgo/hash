@@ -130,7 +130,7 @@ let URL = "./model/";
         window.requestAnimationFrame(loop);
     }
 
-
+    var error = 0;
     async function predict() {
         // Prediction #1: run input through posenet
         // estimatePose can take in an image, video or canvas html element
@@ -162,21 +162,16 @@ let URL = "./model/";
                 et = new Date();
             }
         } else {
-          console.log("+++++++error case+++++++");
-          console.log(et);
-            let temp2 = new Date();
-            console.log("====>",temp2-et);
-            cur_status = "preparing";
-            if(temp2 - et > 1200){
-              console.log("(((((((sound))))))))");
-              var error_audio = new Audio('./audio/error.mp3');
-              et = temp2;
-              error_audio.play();
+          error++;
+          console.log("++++error case++++", error, "개");
+          if(error % 40 == 0){
+            var error_audio = new Audio('./audio/error.mp3');
+            error_audio.play();
+            console.log("audio 출력");
+          }
             }
-        }
         drawPose(pose);
     }
-
     function drawPose(pose) {
         if (webcam.canvas) {
             ctx.drawImage(webcam.canvas, 0, 0);
