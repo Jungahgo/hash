@@ -100,7 +100,7 @@ let URL = "./model/";
         console.log("난수: ",cnt);
         const modelURL = URL + cnt + "/model.json";
         const metadataURL = URL + cnt + "/metadata.json";
-        document.getElementById("poseImg").src = URL + cnt + "/사진" + cnt + ".png";
+        document.getElementById("poseImg").src = URL + cnt + "/사진" + cnt + ".jpeg";
 
         // load the model and metadata
         // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
@@ -121,6 +121,7 @@ let URL = "./model/";
         console.log("after defined", et);
 
         let temp = new Date();
+        
         await predict();
         
         if (cur_status == "next_waiting"){
