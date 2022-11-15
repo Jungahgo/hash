@@ -166,10 +166,10 @@ let URL = "./model/";
                 cur_status = "start";
             }
             end_time = new Date();
-            if ((end_time - start_time)%60  == 0)
+            console.log("success 까지 유지해야하는 시간: ",(3600-(end_time-start_time))/600);
+            if ((3600 - (end_time - start_time))%600 == 0)
             {
-              console.log("jungah",(3600-(end_time-start_time))/60);
-              result.innerHTML = (3600 - (end_time - start_time))/60;
+              result.innerHTML = (3600 - (end_time - start_time))/600+"초 더 유지해주세요.";
             }
             if (end_time - start_time > 3600){
                 result.innerHTML = "success"+end_time;
@@ -180,7 +180,7 @@ let URL = "./model/";
         } else {
           error++;
           console.log("++++error case++++", error, "개");
-          
+          result.innerHTML = 0;
           if(error % 60 == 0 || error == 1){
             var error_audio = new Audio('./audio/error.mp3');
             error_audio.play();
