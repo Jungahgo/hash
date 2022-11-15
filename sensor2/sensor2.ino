@@ -40,7 +40,6 @@ void setup(){
 
 void loop()
 { 
-  //ProcessUpdate();
   events.send(String(digitalRead(SensorPin)).c_str(),"update", millis());
   delay(100);
 }
