@@ -130,7 +130,7 @@ async function loop(timestamp) {
       cur_status = "next";
 
       console.log("done_cnt",done_cnt);
-      if (done_cnt == 2) 
+      if (done_cnt == 3) 
       {
         result.innerHTML = "Finish";
         return;
