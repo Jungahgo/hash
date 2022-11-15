@@ -14,7 +14,6 @@ let URL = "./model/";
         } catch(e) {
           return false;
         }
-    
         return true;
       }
 
@@ -118,8 +117,6 @@ let URL = "./model/";
     async function loop(timestamp) {
         console.log("----------loop-----------");
         webcam.update(); // update the webcam frame
-        //var start_audio = new Audio('./audio/start.mp3');
-        //start_audio.play();
 
         console.log("after defined", et);
 
@@ -127,7 +124,6 @@ let URL = "./model/";
         await predict();
         
         if (cur_status == "next_waiting"){
-
           console.log("===========next_wating===========");
           cur_status = "next";
           result.innerHTML = "성공! 다음동작으로 넘어가는 중";
@@ -143,52 +139,51 @@ let URL = "./model/";
 
     var error = 0;
     async function predict() {
-        // Prediction #1: run input through posenet
-        // estimatePose can take in an image, video or canvas html element
-        const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
-        // Prediction 2: run input through teachable machine classification model
-        const prediction = await model.predict(posenetOutput);
-        console.log(cur_status);
-        console.log("predict -> timestamp/t", et);
-        const classPrediction = prediction[1].className + ": " + prediction[1].probability.toFixed(2);
 
-        labelContainer.childNodes[1].innerHTML = classPrediction;
-        if (et == 0)
-        {
-          et = new Date();
-          console.log("undefined");
-        }
-        if (prediction[1].probability.toFixed(2) > 0.9){
-            console.log("i'm here!/ cur_status: ", cur_status);
-            if (cur_status == "preparing"){
-                start_time = new Date();
-                console.log("start_time 측정 완료");
-                cur_status = "start";
-            }
-            end_time = new Date();
-            console.log("success 까지 유지해야하는 시간: ",(3600-(end_time-start_time))/600);
-            if ((3600 - (end_time - start_time))%600 == 0)
-            {
-              result.innerHTML = (3600 - (end_time - start_time))/600+"초 더 유지해주세요.";
-            }
-            if (end_time - start_time > 3600){
-                result.innerHTML = "success"+end_time;
-                cur_status = "next_waiting";
-                console.log("next_waiting");
-                et = new Date();
-            }
-        } else {
-          error++;
-          console.log("++++error case++++", error, "개");
-          result.innerHTML = 0;
-          if(error % 60 == 0 || error == 1){
-            var error_audio = new Audio('./audio/error.mp3');
-            error_audio.play();
-            console.log("audio 출력");
+      // Prediction #1: run input through posenet
+      // estimatePose can take in an image, video or canvas html element
+      const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
+      // Prediction 2: run input through 
+      const prediction = await model.predict(posenetOutput);
+      const classPrediction = prediction[1].className + ": " + prediction[1].probability.toFixed(2);
+
+      labelContainer.childNodes[1].innerHTML = classPrediction;
+      if (et == 0)
+      {
+        et = new Date();
+        console.log("undefined");
+      }
+      if (prediction[1].probability.toFixed(2) > 0.9){
+          console.log("i'm here!/ cur_status: ", cur_status);
+          if (cur_status == "preparing"){
+              start_time = new Date();
+              console.log("start_time 측정 완료");
+              cur_status = "start";
           }
-          start_time = new Date();
+          end_time = new Date();
+          console.log("success 까지 유지해야하는 시간: ",(3600-(end_time-start_time))/600);
+          if ((3600 - (end_time - start_time))%600 == 0)
+          {
+            result.innerHTML = (3600 - (end_time - start_time))/600+"초 더 유지해주세요.";
+          }
+          if (end_time - start_time > 3600){
+              result.innerHTML = "success"+end_time;
+              cur_status = "next_waiting";
+              console.log("next_waiting");
+              et = new Date();
+          }
+      } else {
+        error++;
+        console.log("++++error case++++", error, "개");
+        result.innerHTML = 0;
+        if(error % 60 == 0 || error == 1){
+          var error_audio = new Audio('./audio/error.mp3');
+          error_audio.play();
+          console.log("audio 출력");
         }
-        drawPose(pose);
+        start_time = new Date();
+      }
+      drawPose(pose);
     }
     function drawPose(pose) {
         if (webcam.canvas) {
