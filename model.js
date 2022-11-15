@@ -59,8 +59,10 @@ let URL = "./model/";
         console.log("init");
         //askNotificationPermission();
         //initCall();
+        //var start_audio = new Audio('./audio/start.mp3');
+        //start_audio.play();
+        
         initCam();
-
     }
 
     async function initCall(){
@@ -70,10 +72,14 @@ let URL = "./model/";
         
     }
 
+    function sleep(ms) {
+      const wakeUpTime = Date.now() + ms;
+      while (Date.now() < wakeUpTime) {}
+    }
+
     async function initCam(){
         console.log("initCam");
         //처음 1회만 실행
-
         initState();
         // Convenience function to setup a webcam
         const size = 500;
@@ -96,6 +102,7 @@ let URL = "./model/";
 
     async function initState() {
         console.log("initState");
+        
         cnt = Math.floor(Math.random() * (total))+1;
         console.log("난수: ",cnt);
         const modelURL = URL + cnt + "/model.json";
@@ -112,8 +119,8 @@ let URL = "./model/";
     async function loop(timestamp) {
         console.log("----------loop-----------");
         webcam.update(); // update the webcam frame
-
         console.log("after defined", et);
+        
         await predict();
         let temp = new Date();
         if (cur_status == "next_waiting"){
@@ -164,7 +171,8 @@ let URL = "./model/";
         } else {
           error++;
           console.log("++++error case++++", error, "개");
-          if(error % 40 == 0){
+          
+          if(error % 60 == 0 || error == 1){
             var error_audio = new Audio('./audio/error.mp3');
             error_audio.play();
             console.log("audio 출력");
