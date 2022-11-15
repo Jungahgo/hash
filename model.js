@@ -122,18 +122,22 @@ let URL = "./model/";
         //start_audio.play();
 
         console.log("after defined", et);
-        await predict();
+
         let temp = new Date();
+        await predict();
+        
         if (cur_status == "next_waiting"){
+
           console.log("===========next_wating===========");
           cur_status = "next";
-          result.innerHTML = "성공";
-          sleep(2000);
-          cur_status = "preparing";
-          result.innerHTML = "다시";
-          initState();
+          result.innerHTML = "성공! 다음동작으로 넘어가는 중";
+          sleep(1000);
         }
-        
+        else if ( et = temp + 2000 && cur_status == "next") {
+            cur_status = "preparing";
+            result.innerHTML = "다시";
+            initState();
+        }
         window.requestAnimationFrame(loop);
     }
 
@@ -166,6 +170,7 @@ let URL = "./model/";
             if (end_time - start_time > 3600){
                 result.innerHTML = "success"+end_time;
                 cur_status = "next_waiting";
+                console.log("next_waiting");
                 et = new Date();
             }
         } else {
