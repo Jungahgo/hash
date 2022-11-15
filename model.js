@@ -162,10 +162,9 @@ let URL = "./model/";
           }
           end_time = new Date();
           console.log("success 까지 유지해야하는 시간: ",(3600-(end_time-start_time))/600);
-          if ((3600 - (end_time - start_time))%600 == 0)
-          {
-            result.innerHTML = (3600 - (end_time - start_time))/600+"초 더 유지해주세요.";
-          }
+          
+          result.innerHTML = (parseInt((3600 - (end_time - start_time))/600))+"초 더 유지해주세요.";
+          
           if (end_time - start_time > 3600){
               result.innerHTML = "success"+end_time;
               cur_status = "next_waiting";
