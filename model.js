@@ -59,6 +59,8 @@ let URL = "./model/";
         console.log("init");
         //askNotificationPermission();
         //initCall();
+        var start_audio = new Audio('./audio/start.mp3');
+        start_audio.play();
         initCam();
 
     }
